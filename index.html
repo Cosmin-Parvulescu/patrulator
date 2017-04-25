@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pătruț Simulator</title>
+</head>
+<body>
+  <div id="patrut">
+    <h1>Simulator de P.Ă.T.R.U.Ț</h1><input data-bind="textInput: query" placeholder="Cu ce te pot ajuta?"> <button data-bind="click: help">AJUTĂ-MĂ</button>
+    <div data-bind="foreach: qa">
+      <article class="qa">
+        <section class="q">
+          Problemă: <span data-bind="text: q"></span>
+        </section>
+        <section class="a">
+          Soluție: <span data-bind="text: a"></span>
+        </section>
+      </article>
+    </div>
+  </div>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js">
+  </script> 
+  <script>
+      var getRandomAnswer = () => {
+  var answers = [
+    'Te-ai consultat cu ceilalti colegi pentru solutionarea problemei?',
+    'Noteaza problema si mentioneaz-o in sedinta de astazi.',
+    'Gandeste-te tu la o posibila rezolvare si apoi vino la mine sa iti spun daca e corect.',
+    'Sigur, raspunsul e simplu: tine cont de obiectivele SMART, fa analiza QCD, ai in vedere SDLC si in final calculeaza VE.'
+  ]
+
+  return answers[Math.floor(Math.random() * answers.length)];
+  }
+
+  function Model() {
+  this.query = ko.observable();
+  this.qa = ko.observableArray();
+
+  this.help = () => {
+    if (this.validateQuery(this.query())) {
+      this.qa.push({
+        q: this.query(),
+        a: getRandomAnswer()
+      })
+
+      this.query('');
+    }
+  }
+
+  this.validateQuery = query => {
+    if (!query) {
+      alert('Ești mai prost ca noaptea... ');
+
+      return false;
+    }
+
+    return true;
+  }
+  }
+
+  ko.applyBindings(new Model())
+
+  </script>
+</body>
+</html>
